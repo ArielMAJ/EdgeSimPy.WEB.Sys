@@ -15,6 +15,28 @@ The `EdgeSimPy.WEB` system is a modular, microservices-based platform for simula
 
 ---
 
+## Getting Started with Docker
+
+Along with centralized documentation, this repository includes a simple method to launch all system components using Docker and Docker Compose.
+
+### Quick Launch Instructions
+
+1. Install Docker and Docker Compose if not already installed.
+2. From your repository root, run the following command to build and start all services:
+  ```
+  docker compose up
+  ```
+3. To run the containers in detached mode, execute:
+  ```
+  docker compose up -d
+  ```
+4. For details on service configuration and container mappings, review the included docker-compose.yml file.
+
+This setup ensures that the complete EdgeSimPy Web System, including microservices and related components, can be easily started with a single command.
+
+
+---
+
 ## Microservices Architecture
 
 ### 1. **[EdgeSimPy.WEB](https://github.com/ArielMAJ/EdgeSimPy.WEB)**
@@ -47,9 +69,9 @@ The `EdgeSimPy.WEB` system is a modular, microservices-based platform for simula
 - **Language:** Python (FastAPI)
 - **Role:** Handles authentication, user accounts, and token validation, providing secure access across the platform.
 
-### 7. **[EdgeSimPy.WEB.docs](https://github.com/ArielMAJ/EdgeSimPy.WEB.docs) (this repository)**
+### 7. **[EdgeSimPy.WEB.Sys](https://github.com/ArielMAJ/EdgeSimPy.WEB.Sys) (this repository)**
 
-- **Role:** Centralized documentation for high-level overview of the EdgeSimPy web system.
+- **Role:** Centralized documentation for high-level overview of the EdgeSimPy web system and its components, including architecture diagrams and system design.
 
 ---
 
