@@ -1,0 +1,94 @@
+services:
+  web:
+    build:
+      context: ./web/
+      dockerfile: Dockerfile
+    env_file:
+      - ./web/.env
+    environment:
+      - PORT=5173
+    ports:
+      - "${WEB_PORT:-5173}:5173"
+
+  bff:
+    build:
+      context: ./bff/
+      dockerfile: ./Dockerfile
+    env_file:
+      - ./bff/.env.docker
+    environment:
+      - PORT=5000
+    ports:
+      - "${BFF_PORT:-5001}:5000"
+
+  orch:
+    build:
+      context: ./orch/
+      dockerfile: Dockerfile
+    env_file:
+      - ./orch/.env.docker
+    environment:
+      - APPLICATION_PORT=3000
+    ports:
+      - "${ORCH_PORT:-3004}:3000"
+
+  esp-api:
+    build:
+      context: ./api/
+      dockerfile: Dockerfile
+    env_file:
+      - ./api/.env.docker
+    environment:
+      - APPLICATION_PORT=3000
+    ports:
+      - "${ESP_PORT:-3003}:3000"
+
+  logger:
+    build:
+      context: ./logger/
+      dockerfile: Dockerfile
+    env_file:
+      - ./logger/.env.docker
+    environment:
+      - APPLICATION_PORT=3000
+    ports:
+      - "${LOGGER_PORT:-3002}:3000"
+    depends_on:
+      - esp-db
+
+  esp-db:
+    image: postgres:16.3
+    restart: always
+    env_file:
+      - ./logger/.env.docker
+    ports:
+      - "${ESP_POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - esp-data:/var/lib/postgresql/data
+
+  sso:
+    build:
+      context: ./sso/
+      dockerfile: ./Dockerfile
+    env_file:
+      - ./sso/.env.docker
+    environment:
+      - APPLICATION_PORT=3000
+    ports:
+      - "${SSO_PORT:-3001}:3000"
+    depends_on:
+      - sso-db
+
+  sso-db:
+    image: postgres:16.3
+    restart: always
+    env_file:
+      - ./sso/.env.docker
+    ports:
+      - "${SSO_POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - sso-data:/var/lib/postgresql/data
+
+volumes:
+  sso-data:
+  esp-data:
